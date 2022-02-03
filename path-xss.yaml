@@ -1,0 +1,18 @@
+id: PATH-BASED-XSS
+
+info:
+  name: Reflected Cross-Site Scripting (XSS)
+  author: 25
+  severity: high
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/"><script>confirm(25)</script>'
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "<script>confirm(25)</script>"
+        part: body
