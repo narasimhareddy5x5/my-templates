@@ -1,6 +1,6 @@
 id: PATH-BASED-XSS
 
-# cat urls.txt | cut -d '?' -f 1 | sed 's:/\?$:/:g' | while read url do;do nuclei -u "$url" -t path-xss.yaml ;done | awk '{print $6}'
+# cat urls.txt | cut -d '?' -f 1 | sed 's:/\?$:/:g' | nuclei -t path-xss.yaml | awk '{print $6}'
 
 info:
   name: Reflected Cross-Site Scripting (XSS)
