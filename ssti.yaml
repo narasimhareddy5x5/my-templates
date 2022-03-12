@@ -1,0 +1,35 @@
+id: SSTI
+
+#USUAGE >> cat urls.txt | gf ssti | nuclei -t ssti.yaml | awk '{print $6}'
+
+
+info:
+  name: server-side template injection (SSTI)
+  author: 25
+  severity: high
+
+requests:
+  - method: GET
+    path:
+       - '{{BaseURL}}{{payload}}'
+
+    payloads:
+       payload: 
+             - 'check-ssti%7B%7B2525*25%7D%7D%5B%5B1*1%5D%5D%0A'
+             - 'check-ssti%7B%7B2525*25%7D%7D%0A'
+             - 'check-ssti%7B%7B2525*%2725%27%7D%7D%0A'
+             - 'check-ssti%3C%25%3D%202525%20*%2025%20%25%3E%0A'
+             - 'check-ssti%24%7B2525*25%7D%0A'
+             - 'check-ssti%24%7B%7B2525*25%7D%7D%0A'
+             - 'check-ssti%40(2525*25)%0A'
+             - 'check-ssti%23%7B2525*25%7D%0A'
+             - 'check-ssti%23%7B%202525%20*%2025%20%7D'
+             - '%7D%7D%7B%7B2525*25%7D%7D'
+
+    skip-variables-check: true
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "63125"
+        part: body
