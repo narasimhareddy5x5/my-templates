@@ -17,7 +17,6 @@ requests:
         regex:
           - '[a-z0-9.-]+\.s3.amazonaws.com'
           - '[a-z0-9.-]+\.s3[a-z0-9.-]+\.amazonaws.com'
-          - '[a-z0-9.-]+\.s3'
           - 's3.amazonaws.com/[a-z0-9._-]+'
           - 's3.[a-z0-9-]+\.amazonaws.com/[a-z0-9._-]+'
 
@@ -27,6 +26,5 @@ requests:
         regex:
           - '[a-z0-9.-]+\.s3.amazonaws.com'
           - '[a-z0-9.-]+\.s3[a-z0-9.-]+\.amazonaws.com'
-          - '[a-z0-9.-]+\.s3'
           - 's3.amazonaws.com/[a-z0-9._-]+'
           - 's3.[a-z0-9-]+\.amazonaws.com/[a-z0-9._-]+'
