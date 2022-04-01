@@ -1,6 +1,6 @@
 id: RCE
 
-#USUAGE     $ echo "http://testphp.vulnweb.com/listproducts.php?cat=" | nuclei -t rce.yaml | awk '{print $6}'
+#USUAGE     $ echo "http://testphp.vulnweb.com/listproducts.php?cat=" | nuclei -t rce.yaml
 #Single parameter URLs only
 
 info:
