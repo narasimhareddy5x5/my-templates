@@ -1,6 +1,6 @@
 id: SSTI
 
-#USUAGE >> cat param-urls.txt | nuclei -t ssti.yaml | awk '{print $6}'
+#USUAGE >> cat param-urls.txt | nuclei -t ssti.yaml
 
 
 info:
