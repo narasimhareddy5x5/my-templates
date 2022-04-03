@@ -1,6 +1,6 @@
 id: SSTI
 
-#USUAGE >> cat urls.txt | gf ssti | nuclei -t ssti.yaml | awk '{print $6}'
+#USUAGE >> cat param-urls.txt | nuclei -t ssti.yaml | awk '{print $6}'
 
 
 info:
@@ -15,31 +15,42 @@ requests:
 
     payloads:
        payload: 
-             - 'check-ssti%7B%7B2525*25%7D%7D%5B%5B1*1%5D%5D%0A'
-             - 'check-ssti%7B%7B2525*25%7D%7D%0A'
-             - 'check-ssti%7B%7B2525*%2725%27%7D%7D%0A'
-             - 'check-ssti%3C%25%3D%202525%20*%2025%20%25%3E%0A'
-             - 'check-ssti%24%7B2525*25%7D%0A'
-             - 'check-ssti%24%7B%7B2525*25%7D%7D%0A'
-             - 'check-ssti%40(2525*25)%0A'
-             - 'check-ssti%23%7B2525*25%7D%0A'
-             - 'check-ssti%23%7B%202525%20*%2025%20%7D'
-             - '%7D%7D%7B%7B2525*25%7D%7D'
-             - '%7B%7B2525*25%7D%7D%5B%5B1*1%5D%5D%0A'
-             - '%7B%7B2525*25%7D%7D%0A'
-             - '%7B%7B2525*%2725%27%7D%7D%0A'
-             - '%3C%25%3D%202525%20*%2025%20%25%3E%0A'
-             - '%24%7B2525*25%7D%0A'
-             - '%24%7B%7B2525*25%7D%7D%0A'
-             - '%40(2525*25)%0A'
-             - '%23%7B2525*25%7D%0A'
-             - '%23%7B%202525%20*%2025%20%7D'
+        - 'check-ssti{{7*7}}[[1*1]]' #No encoding
+        - 'check-ssti{{7*7}}'
+        - "check-ssti{{7*'7'}}"
+        - 'check-ssti<%= 7 * 7 %>'
+        - 'check-ssti${7*7}'
+        - 'check-ssti${{7*7}}'
+        - 'check-ssti@(7*7)'
+        - 'check-ssti#{7*7}'
+        - 'check-ssti#{ 7 * 7 }'
+        - 'check-ssti%7B%7B7*7%7D%7D%5B%5B1*1%5D%5D%0A' #Single encoded
+        - 'check-ssti%7B%7B7*7%7D%7D%0A'
+        - 'check-ssti%7B%7B7*%277%27%7D%7D%0A'
+        - 'check-ssti%3C%25%3D%207%20*%207%20%25%3E%0A'
+        - 'check-ssti%24%7B7*7%7D%0A'
+        - 'check-ssti%24%7B%7B7*7%7D%7D%0A'
+        - 'check-ssti%40(7*7)%0A'
+        - 'check-ssti%23%7B7*7%7D%0A'
+        - 'check-ssti%23%7B%207%20*%207%20%7D'
+        - 'check-ssti%257B%257B7*7%257D%257D%255B%255B1*1%255D%255D%250A%250A' #Double encoded
+        - 'check-ssti%257B%257B7*7%257D%257D%250A%250A'
+        - 'check-ssti%257B%257B7*%25277%2527%257D%257D%250A%250A'
+        - 'check-ssti%253C%2525%253D%25207%2520*%25207%2520%2525%253E%250A%250A'
+        - 'check-ssti%2524%257B7*7%257D%250A%250Acheck-ssti%2524%257B%257B7*7%257D%257D%250A%250A'
+        - 'check-ssti%2540(7*7)%250A%250A'
+        - 'check-ssti%2523%257B7*7%257D%250A%250A'
+        - 'check-ssti%2523%257B%25207%2520*%25207%2520%257D'
+        - 'check-ssti&#123;&#123;7*7}}'  #Encoding for escaping "{" characters
+        - 'check-ssti&#x0007B;&#x0007B;7*7}}'
+        - 'check-ssti&lcub;&lcub;7*7}}'
+        - 'check-ssti&lbrace;&lbrace;7*7}}'
 
-    stop-at-first-match: true
     skip-variables-check: true
+    stop-at-first-match: true
     matchers-condition: and
     matchers:
       - type: word
         words:
-          - "63125"
+          - "check-ssti49"
         part: body
