@@ -19,8 +19,7 @@ requests:
              - '%22%3E%3Cimg%20src%3Dx%20onerror%3Dconfirm(25)%3E'
              - '">/><svg/onload=confirm(25)>'
              - '"onpointerover%3Dconfirm%2825%29+class%3Dxss+'
-
-
+             
     stop-at-first-match: true
     matchers-condition: or
     matchers:
