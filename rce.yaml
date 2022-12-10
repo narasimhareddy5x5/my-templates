@@ -81,6 +81,7 @@ requests:
         - '".system(%27id%27); $dummy="'
         - '".system(%27id%27);#'
         - '".system(%27id%27);//'
+        - '"%2B`id`%2B"'
         
     stop-at-first-match: true
     matchers:
