@@ -81,7 +81,7 @@ requests:
         - ''".system('id'); $dummy="'
         - ''".system('id');#'
         - ''".system('id');//'
-
+        
     stop-at-first-match: true
     matchers:
       - type: regex
