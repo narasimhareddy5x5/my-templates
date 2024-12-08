@@ -4,15 +4,14 @@ info:
   name: Server-Side Template Injection (SSTI)
   author: Narasimha
   severity: high
-  tags: ssti, template-injection
 
 requests:
   - method: GET
     path:
-      - '{{BaseURL}}{{payload}}'
+      - '{{BaseURL}}'
 
     payloads:
-      payload:
+      injection:
         # No encoding payloads
         - 'check-ssti{{7*7}}'
         - 'check-ssti{{7*7}}[[1*1]]'
@@ -50,9 +49,16 @@ requests:
         - 'check-ssti&lcub;&lcub;7*7}}'
         - 'check-ssti&lbrace;&lbrace;7*7}}'
 
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+          - "{{injection}}"
+
     skip-variables-check: true
     stop-at-first-match: true
-    matchers-condition: and
+    matchers-condition: or
     matchers:
       - type: word
         words:
