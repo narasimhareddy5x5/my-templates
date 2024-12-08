@@ -12,7 +12,7 @@ info:
 requests:
   - method: GET
     path:
-      - "{{BaseURL}}{{payload}}"
+      - "{{BaseURL}}"
 
     payloads:
       injection:
