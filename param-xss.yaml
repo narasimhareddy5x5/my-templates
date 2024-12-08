@@ -1,7 +1,7 @@
 id: PARAM-BASED-XSS
 
 info:
-  name: Reflected Cross-Site Scripting (XSS)
+  name: Reflected Cross-Site Scripting (XSS) (param)
   author: 25
   severity: high
 
