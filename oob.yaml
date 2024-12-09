@@ -1,7 +1,7 @@
 id: OOB-RCE-SSRF-TEST
 
 info:
-  name: Out-of-Band RCE/SSRF Test via Interactsh (Path and Headers)
+  name: Out-of-Band RCE/SSRF Test via Interactsh (Headers)
   author: 25
   severity: critical
   description: Detects potential SSRF or RCE by monitoring out-of-band DNS and HTTP interactions using Interactsh.
@@ -10,7 +10,6 @@ requests:
   - method: GET
     path:
       - "{{BaseURL}}"
-      - "{{BaseURL}}{{interactsh-url}}"
 
     headers:
       Accept: "{{interactsh-url}}"
